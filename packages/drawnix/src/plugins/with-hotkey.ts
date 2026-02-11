@@ -87,7 +87,8 @@ export const buildDrawnixHotkeyPlugin = (
               isOpen: true,
               selectedImages: imageElements, // 图片元素
               selectedRenderableElements: renderableElements, // 可渲染元素
-              position
+              position,
+              mode: 'append'
             }
           });
 

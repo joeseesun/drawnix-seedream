@@ -2,7 +2,7 @@
 
 ## API资料
 
-模型ID：doubao-seedream-4-0-250828
+模型ID：doubao-seedream-4-5-251128
 
 ## 核心功能
 
@@ -45,7 +45,7 @@ curl -X POST https://ark.cn-beijing.volces.com/api/v3/images/generations \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $ARK_API_KEY" \
   -d '{
-    "model": "doubao-seedream-4-0-250828",
+    "model": "doubao-seedream-4-5-251128",
     "prompt": "星际穿越，黑洞，黑洞里冲出一辆快支离破碎的复古列车",
     "size": "2K",
     "sequential_image_generation": "disabled",
@@ -61,7 +61,7 @@ curl -X POST https://ark.cn-beijing.volces.com/api/v3/images/generations \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $ARK_API_KEY" \
   -d '{
-    "model": "doubao-seedream-4-0-250828",
+    "model": "doubao-seedream-4-5-251128",
     "prompt": "生成一组共4张连贯插画，核心为同一庭院一角的四季变迁",
     "size": "2K",
     "sequential_image_generation": "auto",
@@ -80,7 +80,7 @@ curl -X POST https://ark.cn-beijing.volces.com/api/v3/images/generations \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $ARK_API_KEY" \
   -d '{
-    "model": "doubao-seedream-4-0-250828",
+    "model": "doubao-seedream-4-5-251128",
     "prompt": "生成狗狗趴在草地上的近景画面",
     "image": "https://example.com/image.png",
     "size": "2K",
@@ -97,7 +97,7 @@ curl -X POST https://ark.cn-beijing.volces.com/api/v3/images/generations \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $ARK_API_KEY" \
   -d '{
-    "model": "doubao-seedream-4-0-250828",
+    "model": "doubao-seedream-4-5-251128",
     "prompt": "将图1的服装换为图2的服装",
     "image": ["https://example.com/image1.png", "https://example.com/image2.png"],
     "size": "2K",
@@ -114,7 +114,7 @@ curl -X POST https://ark.cn-beijing.volces.com/api/v3/images/generations \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $ARK_API_KEY" \
   -d '{
-    "model": "doubao-seedream-4-0-250828",
+    "model": "doubao-seedream-4-5-251128",
     "prompt": "参考这个LOGO，做一套户外运动品牌视觉设计，包括包装袋、帽子、纸盒、手环、挂绳等",
     "image": "https://example.com/logo.png",
     "size": "2K",
@@ -134,7 +134,7 @@ curl -X POST https://ark.cn-beijing.volces.com/api/v3/images/generations \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $ARK_API_KEY" \
   -d '{
-    "model": "doubao-seedream-4-0-250828",
+    "model": "doubao-seedream-4-5-251128",
     "prompt": "生成3张女孩和奶牛玩偶在游乐园开心地坐过山车的图片，涵盖早晨、中午、晚上",
     "image": ["https://example.com/image1.png", "https://example.com/image2.png"],
     "size": "2K",
@@ -156,7 +156,7 @@ curl -X POST https://ark.cn-beijing.volces.com/api/v3/images/generations \
   -H "Content-Type: application/json" \
   -H "Authorization: Bearer $ARK_API_KEY" \
   -d '{
-    "model": "doubao-seedream-4-0-250828",
+    "model": "doubao-seedream-4-5-251128",
     "prompt": "生成3张女孩和奶牛玩偶在游乐园开心地坐过山车的图片，涵盖早晨、中午、晚上",
     "image": ["https://example.com/image1.png", "https://example.com/image2.png"],
     "sequential_image_generation": "auto",
@@ -172,16 +172,16 @@ curl -X POST https://ark.cn-beijing.volces.com/api/v3/images/generations \
 ### 响应格式
 ```
 event: image_generation.partial_succeeded
-data: {"type":"image_generation.partial_succeeded","model":"doubao-seedream-4-0-250828","created":1757418675,"image_index":0,"url":"https://...","size":"2720x1536"}
+data: {"type":"image_generation.partial_succeeded","model":"doubao-seedream-4-5-251128","created":1757418675,"image_index":0,"url":"https://...","size":"2720x1536"}
 
 event: image_generation.partial_succeeded
-data: {"type":"image_generation.partial_succeeded","model":"doubao-seedream-4-0-250828","created":1757418707,"image_index":1,"url":"https://...","size":"2720x1536"}
+data: {"type":"image_generation.partial_succeeded","model":"doubao-seedream-4-5-251128","created":1757418707,"image_index":1,"url":"https://...","size":"2720x1536"}
 
 event: image_generation.partial_succeeded
-data: {"type":"image_generation.partial_succeeded","model":"doubao-seedream-4-0-250828","created":1757418742,"image_index":2,"url":"https://...","size":"2720x1536"}
+data: {"type":"image_generation.partial_succeeded","model":"doubao-seedream-4-5-251128","created":1757418742,"image_index":2,"url":"https://...","size":"2720x1536"}
 
 event: image_generation.completed
-data: {"type":"image_generation.completed","model":"doubao-seedream-4-0-250828","created":1757418742,"usage":{"generated_images":3,"output_tokens":48960,"total_tokens":48960}}
+data: {"type":"image_generation.completed","model":"doubao-seedream-4-5-251128","created":1757418742,"usage":{"generated_images":3,"output_tokens":48960,"total_tokens":48960}}
 
 data: [DONE]
 ```
@@ -191,7 +191,7 @@ data: [DONE]
 ### 单张图输出
 ```json
 {
-    "model": "doubao-seedream-4-0-250828",
+    "model": "doubao-seedream-4-5-251128",
     "created": 1757321139,
     "data": [
         {
@@ -210,7 +210,7 @@ data: [DONE]
 ### 组图输出
 ```json
 {
-    "model": "doubao-seedream-4-0-250828",
+    "model": "doubao-seedream-4-5-251128",
     "created": 1757322902,
     "data": [
         {

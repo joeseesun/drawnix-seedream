@@ -1,0 +1,74 @@
+name: Sync Upstream
+
+# 每天凌晨 2 点自动运行，也可以手动触发
+on:
+  schedule:
+    - cron: '0 2 * * *'  # 每天凌晨 2 点
+  workflow_dispatch:  # 允许手动触发
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Setup Git
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Add upstream remote
+        run: |# 添加上游远程仓库
+        git remote add upstream https://github.com/joeseesun/drawnix-seedream.git || true
+          git fetch upstream
+
+      - name: Sync develop branch
+        run: |
+          git checkout develop
+          git merge upstream/develop --no-edit || {
+            echo "Merge conflict detected. Please resolve manually."
+            exit 1
+          }
+          git push origin develop
+
+      - name: Update custom-dev branch with latest develop
+        run: |
+          git checkout custom-dev
+          git merge develop --no-edit || {
+            echo "Merge conflict in custom-dev. Please resolve manually."
+            # 创建一个 issue 来通知冲突
+            echo "MERGE_CONFLICT=true" >> $GITHUB_ENV
+          }
+          if [ "$MERGE_CONFLICT" != "true" ]; then
+            git push origin custom-dev
+          fi
+
+      - name: Create Issue on Conflict
+        if: env.MERGE_CONFLICT == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: '🚨 上游同步冲突需要手动解决',
+              body: `## 同步冲突通知
+              
+              在同步上游更新到 \`custom-dev\` 分支时发生了合并冲突。
+              
+              ### 需要手动操作：
+              1. 切换到 \`custom-dev\` 分支
+              2. 运行 \`git merge develop\`
+              3. 解决冲突文件
+              4. 提交并推送更改
+              
+              ### 冲突发生时间：
+              ${new Date().toISOString()}
+              
+              请及时处理以保持分支同步。`,
+              labels: ['sync-conflict', 'urgent']
+            })

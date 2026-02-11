@@ -39,6 +39,13 @@ export type ImageToImageDialogState = {
   selectedImages: PlaitElement[];
   selectedRenderableElements?: PlaitElement[]; // 新增：选中的可渲染元素（画笔、文本等）
   position: { x: number; y: number };
+  mode?: 'append' | 'replace';
+};
+
+export type VideoFromImageDialogState = {
+  isOpen: boolean;
+  targetImage: PlaitElement;
+  position: { x: number; y: number };
 };
 
 export type DrawnixState = {
@@ -50,6 +57,7 @@ export type DrawnixState = {
   openSettings: boolean;
   linkState?: LinkState | null;
   imageToImageDialog?: ImageToImageDialogState | null;
+  videoFromImageDialog?: VideoFromImageDialogState | null;
 };
 
 export const DrawnixContext = createContext<{

@@ -102,11 +102,47 @@ drawnix/
 
 ## 开发
 
-```
-npm install
+### 标准开发
 
+```bash
+npm install
 npm run start
 ```
+
+### Fork 项目二次开发
+
+如果你 fork 了本项目并想进行二次开发，同时保持与上游项目的同步：
+
+#### 快速设置
+
+```bash
+# 运行自动设置脚本
+bash scripts/setup-fork-dev.sh
+```
+
+#### 手动设置
+
+```bash
+# 1. 添加上游仓库
+git remote add upstream https://github.com/joeseesun/drawnix-seedream.git
+
+# 2. 获取上游代码
+git fetch upstream
+
+# 3. 创建二次开发分支
+git checkout -b custom-dev
+git push -u origin custom-dev
+```
+
+#### 分支说明
+
+- **`develop`**: 跟踪上游项目，保持同步
+- **`custom-dev`**: 二次开发主分支
+- **`feature/*`**: 功能开发分支
+
+📚 **详细指南**: 请查看 [FORK_DEVELOPMENT_GUIDE.md](./FORK_DEVELOPMENT_GUIDE.md) 了解完整的二次开发流程和最佳实践。
+
+🤖 **自动同步**: 项目已配置 GitHub Actions 自动同步上游更新，每天凌晨 2 点运行。
 
 ## Docker
 
@@ -142,4 +178,4 @@ docker pull pubuzhixing/drawnix:latest
 
 ## License
 
-[MIT License](https://github.com/plait-board/drawnix/blob/master/LICENSE)  
+[MIT License](https://github.com/plait-board/drawnix/blob/master/LICENSE)

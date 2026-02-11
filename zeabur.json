@@ -1,0 +1,13 @@
+{
+  "service": "drawnix-seedream",
+  "type": "web",
+  "docker": {
+    "dockerfile": "Dockerfile"
+  },
+  "env": {
+    "NODE_ENV": "production",
+    "PORT": "3000",
+    "VOLCENGINE_API_KEY": "",
+    "MODELSCOPE_API_KEY": ""
+  }
+}

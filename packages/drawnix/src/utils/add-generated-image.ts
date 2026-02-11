@@ -16,16 +16,17 @@ export interface AddGeneratedImageOptions {
   customHeight?: number;
   selectedImageWidth?: number;
   selectedImageHeight?: number;
+  extraNodeProps?: Record<string, unknown>;
 }
 
 // 根据环境决定图片代理端点
 const getImageProxyUrl = (imageUrl: string) => {
   if (typeof window !== 'undefined') {
     const isLocalDev = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-    const proxyBase = isLocalDev ? 'http://localhost:3001/image-proxy' : '/api/image-proxy';
+    const proxyBase = isLocalDev ? 'http://localhost:3000/image-proxy' : '/image-proxy';
     return `${proxyBase}?url=${encodeURIComponent(imageUrl)}`;
   }
-  return `/api/image-proxy?url=${encodeURIComponent(imageUrl)}`;
+  return `/image-proxy?url=${encodeURIComponent(imageUrl)}`;
 };
 
 /**
@@ -254,7 +255,7 @@ export const replacePlaceholderWithImage = async (
   console.log('🔄 占位符:', placeholder);
   console.log('🔄 图片结果:', result);
 
-  const { maxWidth = 300 } = options;
+  const { maxWidth = 300, extraNodeProps } = options;
 
   try {
     // 找到占位符在board中的索引
@@ -302,7 +303,8 @@ export const replacePlaceholderWithImage = async (
                 height,
               },
               isPlaceholder: false,  // 移除占位符标记
-              placeholderIndex: undefined  // 清除占位符索引
+              placeholderIndex: undefined,  // 清除占位符索引
+              ...(extraNodeProps || {})
             } as any, [placeholderIndex]);
             resolve();
           } catch (error) {
@@ -323,6 +325,38 @@ export const replacePlaceholderWithImage = async (
     console.error('Failed to replace placeholder with image:', error);
     throw error;
   }
+};
+
+export const replaceImageElementWithImage = async (
+  board: PlaitBoard,
+  imageElement: PlaitElement,
+  result: ImageGenerationResult,
+  options: AddGeneratedImageOptions = {}
+): Promise<void> => {
+  const { extraNodeProps } = options;
+  const targetIndex = board.children.findIndex(child => child.id === imageElement.id);
+  if (targetIndex < 0) {
+    return;
+  }
+
+  const currentImageItem = (board.children[targetIndex] as any)?.imageItem;
+  const width = currentImageItem?.width || 300;
+  const height = currentImageItem?.height || 225;
+  const proxyUrl = getImageProxyUrl(result.url);
+
+  Transforms.setNode(
+    board,
+    {
+      url: proxyUrl,
+      imageItem: {
+        url: proxyUrl,
+        width,
+        height,
+      },
+      ...(extraNodeProps || {}),
+    } as any,
+    [targetIndex]
+  );
 };
 
 /**

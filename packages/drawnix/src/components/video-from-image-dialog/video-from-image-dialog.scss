@@ -1,10 +1,11 @@
-.image-to-image-dialog {
+.video-from-image-dialog {
   position: relative;
   background: white;
   border-radius: 8px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
   border: 1px solid rgba(0, 0, 0, 0.08);
   padding: 12px;
+  width: 320px;
 
   &__meta {
     font-size: 12px;
@@ -16,6 +17,24 @@
 
   &__row {
     padding-bottom: 8px;
+  }
+
+  &__row--split {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+
+  &__label {
+    display: grid;
+    gap: 6px;
+  }
+
+  &__label-text {
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(0, 0, 0, 0.6);
+    user-select: none;
   }
 
   &__select {
@@ -36,6 +55,16 @@
     box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.1);
   }
 
+  &__checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(17, 24, 39, 0.9);
+    user-select: none;
+  }
+
   &__close {
     position: absolute;
     top: -8px;
@@ -54,18 +83,18 @@
     z-index: 1;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     border: 1px solid rgba(0, 0, 0, 0.08);
+  }
 
-    &:hover {
-      background: #f5f5f5;
-      color: #333;
-      transform: scale(1.05);
-    }
+  &__close:hover {
+    background: #f5f5f5;
+    color: #333;
+    transform: scale(1.05);
+  }
 
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
+  &__close:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
   }
 
   &__input-group {
@@ -83,21 +112,21 @@
     outline: none;
     transition: border-color 0.2s ease;
     min-width: 200px;
+  }
 
-    &:focus {
-      border-color: #007AFF;
-      box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.1);
-    }
+  &__input:focus {
+    border-color: #007AFF;
+    box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.1);
+  }
 
-    &:disabled {
-      background: rgba(0, 0, 0, 0.02);
-      color: #999;
-      cursor: not-allowed;
-    }
+  &__input:disabled {
+    background: rgba(0, 0, 0, 0.02);
+    color: #999;
+    cursor: not-allowed;
+  }
 
-    &::placeholder {
-      color: #999;
-    }
+  &__input::placeholder {
+    color: #999;
   }
 
   &__submit {
@@ -112,15 +141,15 @@
     border-radius: 6px;
     cursor: pointer;
     transition: all 0.2s ease;
+  }
 
-    &:hover:not(:disabled) {
-      background: #0056CC;
-    }
+  &__submit:hover:not(:disabled) {
+    background: #0056CC;
+  }
 
-    &:disabled {
-      background: #ccc;
-      cursor: not-allowed;
-    }
+  &__submit:disabled {
+    background: #ccc;
+    cursor: not-allowed;
   }
 
   &__loading {
@@ -135,60 +164,26 @@
     border: 2px solid rgba(255, 255, 255, 0.3);
     border-top: 2px solid white;
     border-radius: 50%;
-    animation: spin 1s linear infinite;
+    animation: video-from-image-spin 1s linear infinite;
   }
 }
 
-@keyframes spin {
+@keyframes video-from-image-spin {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
-// 暗色主题支持
 [data-theme="dark"] {
-  .image-to-image-dialog {
+  .video-from-image-dialog {
     background: #2c2c2c;
     border-color: rgba(255, 255, 255, 0.12);
-    
-    &__header {
-      border-bottom-color: rgba(255, 255, 255, 0.12);
-    }
-    
-    &__title {
-      color: #fff;
-    }
-    
-    &__close {
-      color: #ccc;
-      
-      &:hover {
-        background: rgba(255, 255, 255, 0.1);
-        color: #fff;
-      }
-    }
-    
-    &__input {
-      background: #3c3c3c;
-      border-color: rgba(255, 255, 255, 0.12);
-      color: #fff;
-      
-      &:focus {
-        border-color: #007AFF;
-        box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2);
-      }
-      
-      &:disabled {
-        background: rgba(255, 255, 255, 0.05);
-        color: #999;
-      }
-      
-      &::placeholder {
-        color: #999;
-      }
-    }
 
     &__meta {
       color: rgba(255, 255, 255, 0.72);
+    }
+
+    &__label-text {
+      color: rgba(255, 255, 255, 0.7);
     }
 
     &__select {
@@ -196,9 +191,25 @@
       border-color: rgba(255, 255, 255, 0.12);
       color: rgba(255, 255, 255, 0.92);
     }
-    
-    &__hint {
+
+    &__checkbox {
+      color: rgba(255, 255, 255, 0.88);
+    }
+
+    &__input {
+      background: #3c3c3c;
+      border-color: rgba(255, 255, 255, 0.12);
+      color: #fff;
+    }
+
+    &__input:focus {
+      border-color: #007AFF;
+      box-shadow: 0 0 0 2px rgba(0, 122, 255, 0.2);
+    }
+
+    &__input::placeholder {
       color: #999;
     }
   }
 }
+

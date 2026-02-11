@@ -24,6 +24,9 @@ node_modules
 !.vscode/launch.json
 !.vscode/extensions.json
 
+# IDE - Trae
+.trae
+
 # misc
 /.sass-cache
 /connect.lock
@@ -43,3 +46,7 @@ Thumbs.db
 
 # Vercel
 .vercel
+
+# Docker images
+*.tar
+drawnix-*.tar

@@ -6,7 +6,8 @@ const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-  'Access-Control-Allow-Credentials': true
+  'Access-Control-Allow-Credentials': true,
+  'Cross-Origin-Resource-Policy': 'cross-origin'
 };
 
 // Main Vercel function handler for image proxy
@@ -83,7 +84,19 @@ module.exports = (req, res) => {
       Object.keys(corsHeaders).forEach(key => {
         res.setHeader(key, corsHeaders[key]);
       });
-      res.setHeader('Content-Type', imageRes.headers['content-type'] || 'image/jpeg');
+
+      // If remote returned an error (like 403 Forbidden due to expiration)
+      // and it's not an image content type, ORB will block it if we send it as application/json.
+      // We force an image content type or a safe text type to avoid ORB block messages in console,
+      // but status code 403 will still be visible in Network tab.
+      const remoteContentType = imageRes.headers['content-type'] || '';
+      if (imageRes.statusCode >= 400 && !remoteContentType.startsWith('image/')) {
+        res.setHeader('Content-Type', 'text/plain');
+        res.end(`Remote server returned ${imageRes.statusCode}: ${imageRes.statusMessage || 'Error'}`);
+        return;
+      }
+
+      res.setHeader('Content-Type', remoteContentType || 'image/jpeg');
       res.setHeader('Cache-Control', 'public, max-age=86400');
 
       imageRes.pipe(res);
